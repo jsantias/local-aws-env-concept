@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  bootstrap:
+    image: amazon/aws-cli:latest
+    entrypoint: ["/bin/sh", "-c"]
+    command: 
+    - |
+      aws sqs create-queue --queue-name ${QUEUE_NAME} --endpoint-url=http://localstack:4566 
+      aws s3 mb s3://${S3_BUCKET_NAME} --endpoint-url=http://localstack:4566 
+    env_file:
+      - ../.env
+    depends_on:
+      localstack:
+        condition: service_healthy

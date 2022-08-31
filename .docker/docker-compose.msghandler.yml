@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  sender:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    command: "sender.py"
+    env_file:
+      - ../.env
+    restart: unless-stopped
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+  receiver:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    command: "receiver.py"
+    env_file:
+      - ../.env
+    restart: unless-stopped
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
