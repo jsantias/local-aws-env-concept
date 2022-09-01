@@ -2,7 +2,7 @@
 
 This project adopts a local cloud environment for development and testing purposes. It uses a powershell script to launch the entire project with a cloud environment in docker. 
 
-![Architecture](https://github.com/jsantias/localstack-demo/blob/images/architecture.png)
+![Architecture](https://github.com/jsantias/localstack-demo/blob/main/images/architecture.png)
 
 ## What is localstack?
 
