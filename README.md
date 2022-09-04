@@ -1,6 +1,6 @@
 ## Overview
 
-This is a proof of concept to enable developers to dev and test AWS services locally using localstack. Project sends and receives messages with SQS and uploads the data to S3. Uses localstack in a dockerised environment. It uses a powershell script as an entrypoint to launch the project inside a local cloud environment via docker. 
+This is a proof of concept to enable developers to dev and test AWS services locally using localstack. Project sends and receives messages with SQS and uploads the data to S3. It uses a powershell script as an entrypoint to launch the project inside a local cloud environment via docker. 
 
 ![Architecture](https://github.com/jsantias/localstack-demo/blob/main/images/architecture.png)
 
