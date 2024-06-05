@@ -6,8 +6,31 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command: 
     - |
-      aws sqs create-queue --queue-name ${QUEUE_NAME} --endpoint-url=http://localstack:4566 
-      aws s3 mb s3://${S3_BUCKET_NAME} --endpoint-url=http://localstack:4566 
+      # Function to create SQS queue
+      create_queue() {
+        aws sqs create-queue --queue-name ${QUEUE_NAME} --endpoint-url=${ENDPOINT_URL}
+      }
+
+      # Function to create S3 bucket
+      create_bucket() {
+        aws s3 mb s3://${S3_BUCKET_NAME} --endpoint-url=${ENDPOINT_URL}
+      }
+
+      # Try to create the SQS queue
+      {
+        create_queue
+        echo "Queue ${QUEUE_NAME} created successfully."
+      } || {
+        echo "Queue ${QUEUE_NAME} already exists or another error occurred."
+      }
+
+      # Try to create the S3 bucket
+      {
+        create_bucket
+        echo "Bucket ${S3_BUCKET_NAME} created successfully."
+      } || {
+        echo "Bucket ${S3_BUCKET_NAME} already exists or another error occurred."
+      }
     env_file:
       - ../.env
     depends_on:
