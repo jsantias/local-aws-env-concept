@@ -1,4 +1,5 @@
 boto3==1.24.0
 botocore==1.27.0
 python-dotenv==0.20.0
-pygelf
+pygelf==0.4.2
+jurigged==0.5.8

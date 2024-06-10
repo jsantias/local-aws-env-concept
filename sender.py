@@ -31,11 +31,15 @@ response = sqs.send_message(
     MessageAttributes={
         'Title': {
             'DataType': 'String',
-            'StringValue': 'Blue skies, rainbows... and Skittles!'
+            'StringValue': 'Blue skies, rainbows... and Skittles!',
         },
         'Author': {
             'DataType': 'String',
             'StringValue': 'John Santias'
+        },
+        'Singer': {
+            'DataType': 'String',
+            'StringValue': 'kendrick Lamar'
         }
     },
     MessageBody=("Hello World!")
