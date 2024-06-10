@@ -8,6 +8,8 @@ services:
     command: "sender.py"
     env_file:
       - ../.env
+    volumes:
+      - ../sender.py:/app/sender.py
     restart: unless-stopped
     depends_on:
       bootstrap:
@@ -24,6 +26,8 @@ services:
     command: "receiver.py"
     env_file:
       - ../.env
+    volumes:
+      - ../receiver.py:/app/receiver.py
     restart: unless-stopped
     depends_on:
       bootstrap:
