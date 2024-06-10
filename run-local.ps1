@@ -9,7 +9,7 @@ $projectName = Split-Path -Path $PSScriptRoot -Leaf
 $dockerPath = './.docker'
 
 if (Test-Path $dockerPath) {
-  $dockerComposeFilesToRun = "-f  $dockerPath/docker-compose.localstack.yml -f  $dockerPath/docker-compose.msghandler.yml -f  $dockerPath/docker-compose.bootstrap.yml"
+  $dockerComposeFilesToRun = "-f  $dockerPath/docker-compose.localstack.yml -f  $dockerPath/docker-compose.app.yml -f  $dockerPath/docker-compose.bootstrap.yml -f $dockerPath/docker-compose.observability.yml"
   $dockerComposeFilesToRun = $dockerComposeFilesToRun + " --env=./.env -p $projectName";
   $dockerComposeFilesToRun = $dockerComposeFilesToRun + ' up --build'
 } 

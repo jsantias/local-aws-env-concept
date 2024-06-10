@@ -3,6 +3,9 @@ import os
 import time
 from os.path import join, dirname
 from dotenv import load_dotenv
+from pygelf import GelfUdpHandler
+
+import logging
 
 # Load environment variables
 load_dotenv()
@@ -14,6 +17,12 @@ sqs = boto3.client('sqs',
                     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"), 
                     region_name=os.getenv("AWS_DEFAULT_REGION"),
                     endpoint_url=queue_url)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+logger.addHandler(GelfUdpHandler(host=os.getenv("LOGGER_HOST"), port=12201))
+
 
 # Send message to SQS queue
 response = sqs.send_message(
@@ -32,6 +41,6 @@ response = sqs.send_message(
     MessageBody=("Hello World!")
 )
 
-print('Message sent to %s' % queue_url) 
-print(response['MessageId'])
+logger.info('Message sent to %s' % queue_url) 
+logger.info(response['MessageId'])
 time.sleep(10)

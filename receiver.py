@@ -3,7 +3,9 @@ import time
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+from pygelf import GelfUdpHandler
 
+import logging
 import upload
 import filename_generator
 
@@ -17,6 +19,11 @@ sqs = boto3.client('sqs',
                     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"), 
                     region_name=os.getenv("AWS_DEFAULT_REGION"),
                     endpoint_url=queue_url)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+logger.addHandler(GelfUdpHandler(host=os.getenv("LOGGER_HOST"), port=12201))
 
 while(True):
     # Receive message from SQS queue
@@ -33,7 +40,7 @@ while(True):
         WaitTimeSeconds=0
     )
 
-    print(response)
+    logger.info(response)
 
     if 'Messages' in response:
         message = response['Messages'][0]
@@ -48,7 +55,7 @@ while(True):
                 QueueUrl=queue_url,
                 ReceiptHandle=receipt_handle
             )
-            print('Received and deleted message: %s' % message["Body"])
+            logger.info('Received and deleted message: %s' % message["Body"])
         else:
-            print('Will try again')
+            logger.error('Will try again')
     time.sleep(3)

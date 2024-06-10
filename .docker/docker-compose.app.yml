@@ -12,6 +12,11 @@ services:
     depends_on:
       bootstrap:
         condition: service_completed_successfully
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
+        tag: localenv-concept
   receiver:
     build:
       context: ../
@@ -23,3 +28,8 @@ services:
     depends_on:
       bootstrap:
         condition: service_completed_successfully
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
+        tag: localenv-concept
